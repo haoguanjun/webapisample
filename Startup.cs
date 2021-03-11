@@ -28,6 +28,14 @@ namespace lovepdf {
         // 配置系统所使用的各种服务
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+
+            // 启用 Session
+            services.AddSession (options => {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds (10);
+                options.Cookie.IsEssential = true;
+            });
+
             // 配置基于内存的缓存
             services.AddMemoryCache ();
 
@@ -66,9 +74,10 @@ namespace lovepdf {
 
         // Autofac 会在调用 ConfigurationService() 之后，自动调用 ConfigureContainer() 方法
         public void ConfigureContainer (ContainerBuilder builder) {
-            builder.RegisterType<WeatherForecastService>()
-                .As<IWeatherForecastService>()
-                .InstancePerLifetimeScope();
+            // 注册自定义服务
+            builder.RegisterType<WeatherForecastService> ()
+                .As<IWeatherForecastService> ()
+                .InstancePerLifetimeScope ();
         }
 
         // Writing logs before completion of the DI container setup in the Startup.ConfigureServices method is not supported:
@@ -90,7 +99,10 @@ namespace lovepdf {
 
             app.UseRouting ();
 
-            app.UseAuthorization ();
+            app.UseAuthentication ();
+            app.UseAuthorization();
+
+            app.UseSession ();
 
             // 使用特性路由
             app.UseEndpoints (endpoints => {
