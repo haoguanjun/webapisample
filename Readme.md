@@ -67,3 +67,22 @@ Program.cs
                 })
 ```
 
+## 使用多环境
+
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
+
+环境变量
+* DOTNET_ENVIRONMENT
+* ASPNETCORE_ENVIRONMENT 覆盖 DOTNET_ENVIRONMENT
+
+支持的值
+* Development
+* Staging
+* Production
+
+在 launchSettings.json 中，名称为项目名称的配置项目，用于命令行的 Kestrel 模式。
+可以在命令行中指定，该方式仅仅支持 Kestrel 模式。
+```bash
+dotnet run --launch-profile "SampleApp"
+```
+
