@@ -23,6 +23,7 @@ namespace lovepdf.Controllers
         // 必须使用 [FromForm]
         // 变量名称需要匹配表单中的上传文件字段名称
         // 使用 Consumes 来限制请求媒体类型，不匹配的话，返回 Method Not Allowed
+        
         [HttpPost("info")]
         [Consumes("multipart/form-data")]
         [Produces(MediaTypeNames.Application.Json)]
