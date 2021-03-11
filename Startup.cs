@@ -28,6 +28,9 @@ namespace lovepdf {
         // 配置系统所使用的各种服务
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            
+            // 支持 Session
+            services.AddDistributedMemoryCache();
 
             // 启用 Session
             services.AddSession (options => {
@@ -37,7 +40,7 @@ namespace lovepdf {
             });
 
             // 配置基于内存的缓存
-            services.AddMemoryCache ();
+            // services.AddMemoryCache ();
 
             // 配置访问 GitHub 的客户端
             services.AddHttpClient ("github", client => {

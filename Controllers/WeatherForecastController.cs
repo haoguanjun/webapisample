@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using lovepdf.Models;
 using lovepdf.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -30,11 +31,11 @@ namespace lovepdf.Controllers
 
         private readonly IWeatherForecastService _forecastService;
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IMemoryCache _cache;
+        private readonly IDistributedCache _cache;
         public WeatherForecastController(
             IWeatherForecastService forecastService,
             ILogger<WeatherForecastController> logger,
-            IMemoryCache memoryCache
+            IDistributedCache  memoryCache
             )
         {
             _forecastService = forecastService;
