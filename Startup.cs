@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Polly;
 
 namespace lovepdf
 {
@@ -20,7 +21,7 @@ namespace lovepdf
         // 注入配置对象
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;  
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +30,19 @@ namespace lovepdf
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 配置访问 GitHub 的客户端
+            services.AddHttpClient("GitHub", client =>
+            {
+                client.BaseAddress = new Uri("https://api.github.com/");
+                client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            })
+            .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10)
+            }));
+
             // 使用扩展方法配置服务
             services.ConfigureCore();
 
@@ -39,8 +53,9 @@ namespace lovepdf
                 .AddControllersAsServices();
 
             // 支持版本化
-            services.AddApiVersioning( options => {
-                options.DefaultApiVersion = new ApiVersion(1,0);
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
             });
@@ -59,7 +74,7 @@ namespace lovepdf
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            logger.LogInformation( $"MyConfig: {Configuration["MyConfig"]}" );
+            logger.LogInformation($"MyConfig: {Configuration["MyConfig"]}");
 
             // 开发模式
             if (env.IsDevelopment())

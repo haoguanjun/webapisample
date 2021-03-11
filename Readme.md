@@ -86,3 +86,9 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspn
 dotnet run --launch-profile "SampleApp"
 ```
 
+## Polly
+
+```bash
+dotnet add package Polly
+dotnet add package Microsoft.Extensions.Http.Polly
+```
