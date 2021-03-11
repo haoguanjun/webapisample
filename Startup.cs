@@ -30,6 +30,9 @@ namespace lovepdf
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 配置基于内存的缓存
+            services.AddMemoryCache();
+            
             // 配置访问 GitHub 的客户端
             services.AddHttpClient("github", client =>
             {

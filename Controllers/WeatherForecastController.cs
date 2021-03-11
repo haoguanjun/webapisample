@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace lovepdf.Controllers
@@ -26,10 +27,14 @@ namespace lovepdf.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IMemoryCache _cache;
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IMemoryCache memoryCache
+            )
         {
             _logger = logger;
+            _cache = memoryCache;
         }
 
         [HttpGet]
