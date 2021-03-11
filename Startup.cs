@@ -31,7 +31,7 @@ namespace lovepdf
         public void ConfigureServices(IServiceCollection services)
         {
             // 配置访问 GitHub 的客户端
-            services.AddHttpClient("GitHub", client =>
+            services.AddHttpClient("github", client =>
             {
                 client.BaseAddress = new Uri("https://api.github.com/");
                 client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
