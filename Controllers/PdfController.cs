@@ -35,9 +35,7 @@ namespace lovepdf.Controllers
                 _logger.LogInformation( $"file length: { stream.Length}.");
 
                 stream.Seek(0, SeekOrigin.Begin);
-                var tempPath = System.IO.Path.GetTempFileName();
-                System.IO.File.WriteAllBytes(tempPath, stream.ToArray());
-                PdfSharp.Pdf.PdfDocument document = PdfReader.Open(tempPath, PdfDocumentOpenMode.InformationOnly);
+                PdfSharp.Pdf.PdfDocument document = new PdfSharp.Pdf.PdfDocument(stream);
 
                 var creator = document.Info.Creator;
                 var result = new {

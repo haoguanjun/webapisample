@@ -92,3 +92,9 @@ dotnet run --launch-profile "SampleApp"
 dotnet add package Polly
 dotnet add package Microsoft.Extensions.Http.Polly
 ```
+
+## Procee upload file
+
+```bash
+POST https://localhost:5001/api/pdf/info HTTP/1.1
+```
