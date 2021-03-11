@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Extensions;
 
 namespace lovepdf
 {
@@ -18,6 +20,10 @@ namespace lovepdf
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog( (context, loggerConfiguration) => {
+                    loggerConfiguration.ReadFrom.Configuration(context.Configuration)
+                    .Enrich.FromLogContext();
+                })
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
