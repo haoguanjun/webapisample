@@ -39,10 +39,10 @@ namespace lovepdf
                 .AddControllersAsServices();
 
             // 支持版本化
-            services.AddApiVersioning( x => {
-                x.DefaultApiVersion = new ApiVersion(1,0);
-                x.AssumeDefaultVersionWhenUnspecified = true;
-                x.ReportApiVersions = true;
+            services.AddApiVersioning( options => {
+                options.DefaultApiVersion = new ApiVersion(1,0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
             });
 
             // 配置 Swagger
