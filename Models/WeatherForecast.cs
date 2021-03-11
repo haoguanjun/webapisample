@@ -1,6 +1,6 @@
 using System;
 
-namespace lovepdf
+namespace lovepdf.Models
 {
     public class WeatherForecast
     {
