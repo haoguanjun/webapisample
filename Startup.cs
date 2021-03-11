@@ -28,7 +28,12 @@ namespace lovepdf {
         // 配置系统所使用的各种服务
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            
+            // 注册 HttpContext 访问器
+            // 在服务中
+            // 注入服务 IHttpContextAccessor httpContextAccessor
+            // var username = _httpContextAccessor.HttpContext.User.Identity.Name;
+            services.AddHttpContextAccessor();
+
             // 支持 Session
             services.AddDistributedMemoryCache();
 
